@@ -1,7 +1,8 @@
-I have installed homebrew from https://brew.sh
-I typed in terminal brew install sdl2
-Project -> Build Settings -> Search Paths -> Header Search Paths, add value "/usr/local/include"
-Build Phases -> Headers, Add a new entry in project in /usr/local/Cellar/sdl2/2.28.5/include/SDL2
-In General Frameworks & Libraries put libSDL2-2.0.0.dylib (its here /usr/local/Cellar/sdl2/2.0.14_1/lib)
-And most important I have checked Disable Library Validations in Signing & Capabilities
+Create-SDL-App (Work in Progress)
+
+Generates the necessary dependencies and builds a start up C++ w/SDL blank project.
+
+This project intention is to help alleviate the difficulties of setting up a basic C++ project that includes SDL that can run for everyone. This will intitially allow the user to run the program from the command line, but would be beneficial to have IDE set up for the future.
+
+How to Run:
 
