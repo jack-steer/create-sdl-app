@@ -41,17 +41,22 @@ int main(int argc, const char * argv[]) {
     
     cout << "Checking if SDL is installed via brew..." << endl;
     bool libExists = containsLib("/usr/local/Cellar/sdl2/2.28.5/lib");
-    if (libExists) {
-        cout << "We've found a version of SDL" << endl;
+    if (!libExists) {
+        cout << "Not found a valid version of SDL" << endl;
+        return 0;
     }
     
+    cout << "SDL Version found..." << endl;
     string projectPath;
     string projectName;
     
     cout << "Please enter the path where your new project will be generated: " << endl;
     cin >> projectPath;
     
-    // Check project path is valid
+    if (!opendir(projectPath.c_str())) {
+        cout << "Error: Project path " << projectPath << " not found." << endl;
+        return 0;
+    }
     
     cout << "Please enter a name for your project: " << endl;
     cin >> projectName;
