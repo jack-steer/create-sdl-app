@@ -7,34 +7,10 @@
 
 #include <iostream>
 #include <string>
-#include <regex>
-#include <dirent.h>
-using namespace std;
+#include <filesystem>
 
-bool containsLib(string dirname) {
-    
-    DIR* dir = opendir(dirname.c_str());
-    if (dir == NULL) {
-        return 0;
-    }
-    
-    struct dirent* entity;
-    entity = readdir(dir);
-    
-    regex reg ("(libSDL2[^ ])");
-    cmatch matches;
-    
-    while (entity != NULL) {
-        entity = readdir(dir);
-        bool result = regex_search(entity->d_name, reg);
-        if (result) {
-            return 1;
-        }
-    }
-    
-    closedir(dir);
-    return 0;
-}
+#include "file.hpp"
+using namespace std;
 
 int main(int argc, const char * argv[]) {
     cout << "`Welcome to Create SDL App`!\n" << "\n\n\n";
@@ -55,6 +31,7 @@ int main(int argc, const char * argv[]) {
     
     if (!opendir(projectPath.c_str())) {
         cout << "Error: Project path " << projectPath << " not found." << endl;
+        
         return 0;
     }
     
@@ -62,8 +39,20 @@ int main(int argc, const char * argv[]) {
     cin >> projectName;
     
     // Generate the new project with a blank window
+    filesystem::path sourceFile = "";
+    filesystem::path targetParent = projectPath + "/" + projectName;
+    auto target = targetParent  / sourceFile.filename();
     
-    // Provide commands to build and run the new app
+    try
+    {
+        filesystem::create_directories(targetParent);
+        filesystem::copy_file(sourceFile, target, filesystem::copy_options::overwrite_existing);
+    }
+    catch (std::exception& e)
+    {
+        std::cout << e.what();
+        return 0;
+    }
     
     cout << "Your new C++ SDL project has been generated!" << endl;
     cout << "To run this project, run the following commands: " << endl;
