@@ -7,14 +7,15 @@
 
 #include <iostream>
 #include <string>
-#include <filesystem>
+#include <stdio.h>
+#include <regex>
 
 #include "file.hpp"
+
 using namespace std;
 
 int main(int argc, const char * argv[]) {
     cout << "`Welcome to Create SDL App`!\n" << "\n\n\n";
-    
     cout << "Checking if SDL is installed via brew..." << endl;
     bool libExists = containsLib("/usr/local/Cellar/sdl2/2.28.5/lib");
     if (!libExists) {
@@ -39,21 +40,7 @@ int main(int argc, const char * argv[]) {
     cin >> projectName;
     
     // Generate the new project with a blank window
-    filesystem::path sourceFile = "";
-    filesystem::path targetParent = projectPath + "/" + projectName;
-    auto target = targetParent  / sourceFile.filename();
-    
-    try
-    {
-        filesystem::create_directories(targetParent);
-        filesystem::copy_file(sourceFile, target, filesystem::copy_options::overwrite_existing);
-    }
-    catch (std::exception& e)
-    {
-        std::cout << e.what();
-        return 0;
-    }
-    
+    generateTargetDirectory(projectPath, projectName);
     cout << "Your new C++ SDL project has been generated!" << endl;
     cout << "To run this project, run the following commands: " << endl;
     

@@ -12,7 +12,11 @@
 #include <string>
 #include <regex>
 #include <dirent.h>
+#include <filesystem>
+#include <source_location>
 
 bool containsLib(std::string);
+
+void generateTargetDirectory(std::string, std::string);
 
 #endif /* file_hpp */

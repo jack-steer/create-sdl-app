@@ -32,3 +32,20 @@ bool containsLib(string dirname) {
     closedir(dir);
     return 0;
 }
+
+void generateTargetDirectory(string projectPath, string projectName) {
+    source_location src = source_location::current();
+    regex reg ("^(.+)src/([^//]+)$");
+    cmatch matches;
+    regex_search(src.file_name(), matches, reg);
+    filesystem::path targetParent = projectPath + "/" + projectName;
+
+    try
+    {
+        filesystem::create_directories(targetParent);
+        filesystem::copy_file(matches[1].str() + "example-code", targetParent  / "example-code", filesystem::copy_options::overwrite_existing);
+    }
+    catch (std::exception& e)
+    {
+    }
+}
