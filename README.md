@@ -7,7 +7,7 @@ This project intention is to help alleviate the difficulties of setting up a bas
 
 ## Prerequisites
 
-To generate the built executable, you'll need g++ or clang++ compliers installed.
+To generate the built executable, you'll need g++ or clang++ compilers installed.
 
 ## Installation
 
