@@ -1,8 +1,0 @@
-Create-SDL-App (Work in Progress)
-
-Generates the necessary dependencies and builds a start up C++ w/SDL blank project.
-
-This project intention is to help alleviate the difficulties of setting up a basic C++ project that includes SDL that can run for everyone. This will intitially allow the user to run the program from the command line, but would be beneficial to have IDE set up for the future.
-
-How to Run:
-

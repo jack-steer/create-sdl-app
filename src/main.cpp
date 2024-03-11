@@ -49,7 +49,7 @@ int main(int argc, const char *argv[])
     cout << "To run this project, run the following commands: " << endl;
 
     cout << "cd " << projectPath << "/" << projectName << endl;
-    cout << "clang++ main.cpp ./glad/src/glad.c -I/Library/Frameworks/SDL2.framework/Headers -I./glad/include -F/Library/Frameworks -framework SDL2 -rpath /Library/Frameworks";
+    cout << "clang++ main.cpp -I/Library/Frameworks/SDL2.framework/Headers -F/Library/Frameworks -framework SDL2 -rpath /Library/Frameworks" << endl;
     cout << "./a.out" << endl;
     return 0;
 }

@@ -59,10 +59,12 @@ void generateTargetDirectory(string projectPath, string projectName)
     regex_search(src.file_name(), matches, reg);
     filesystem::path targetParent = projectPath + "/" + projectName;
 
+    filesystem::path p = matches[1].str() + "main";
+
     try
     {
-        fs::create_directories(targetParent);
-        fs::copy_file(matches[1].str() + "example-code", targetParent / "example-code", filesystem::copy_options::overwrite_existing);
+        filesystem::create_directories(targetParent);
+        filesystem::copy_file(p, targetParent  / "main.cpp", filesystem::copy_options::overwrite_existing);
     }
     catch (exception &e)
     {
