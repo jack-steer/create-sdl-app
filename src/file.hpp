@@ -9,14 +9,18 @@
 #define file_hpp
 
 #include <stdio.h>
+#include <iostream>
 #include <string>
 #include <regex>
 #include <dirent.h>
 #include <filesystem>
 #include <source_location>
 
-bool containsLib(std::string);
+using namespace std;
+namespace fs = std::filesystem;
 
-void generateTargetDirectory(std::string, std::string);
+bool sdl2FrameworkSearch();
+bool containsLib(string);
+void generateTargetDirectory(string, string);
 
 #endif /* file_hpp */
