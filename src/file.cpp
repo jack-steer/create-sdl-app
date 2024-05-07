@@ -8,34 +8,53 @@
 #include "file.hpp"
 using namespace std;
 
-bool containsLib(string dirname) {
+bool sdl2FrameworkSearch()
+{
+    const string sdl2Paths[] = {
+        "/opt/homebrew/Cellar/sdl2",
+        "/usr/local/Cellar/sdl2"};
 
-    DIR* dir = opendir(dirname.c_str());
-    if (dir == NULL) {
-        return 0;
-    }
+    for (const auto &path : sdl2Paths)
+    {
 
-    struct dirent* entity;
-    entity = readdir(dir);
+        cout << "Checking path: " << path << endl;
+        if (!filesystem::exists(path))
+        {
+            cout << "SDL2 directory not found" << endl;
+            continue;
+        }
 
-    regex reg ("(libSDL2[^ ])");
-    cmatch matches;
+        for (const auto &entry : fs::directory_iterator(path))
+        {
+            if (entry.is_directory())
+            {
+                string versionDirectory = entry.path().string() + "/lib";
 
-    while (entity != NULL) {
-        entity = readdir(dir);
-        bool result = regex_search(entity->d_name, reg);
-        if (result) {
-            return 1;
+                if (fs::exists(versionDirectory))
+                {
+                    for (const auto &file : fs::directory_iterator(versionDirectory))
+                    {
+                        if (file.is_regular_file())
+                        {
+                            smatch match;
+                            string filename = file.path().filename().string();
+                            if (regex_search(filename, match, regex("(libSDL2[^ ]+)")))
+                            {
+                                return true;
+                            }
+                        }
+                    }
+                }
+            }
         }
     }
-
-    closedir(dir);
-    return 0;
+    return false;
 }
 
-void generateTargetDirectory(string projectPath, string projectName) {
+void generateTargetDirectory(string projectPath, string projectName)
+{
     source_location src = source_location::current();
-    regex reg ("^(.+)src/([^//]+)$");
+    regex reg("^(.+)src/([^//]+)$");
     cmatch matches;
     regex_search(src.file_name(), matches, reg);
     filesystem::path targetParent = projectPath + "/" + projectName;
@@ -47,7 +66,8 @@ void generateTargetDirectory(string projectPath, string projectName) {
         filesystem::create_directories(targetParent);
         filesystem::copy_file(p, targetParent  / "main.cpp", filesystem::copy_options::overwrite_existing);
     }
-    catch (std::exception& e)
+    catch (exception &e)
     {
+        cout << "Error when creating directory: " << e.what() << endl;
     }
 }
